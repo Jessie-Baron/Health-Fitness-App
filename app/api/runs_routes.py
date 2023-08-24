@@ -1,6 +1,7 @@
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from flask_login import login_required, current_user
-from app.models import User, db, Runs
+from app.models import User, db
+from app.models.runs import Runs
 import datetime
 
 runs_routes = Blueprint('runs', __name__)
@@ -11,17 +12,16 @@ def verify_user():
         return "error"
     return verified_user
 
-@runs_routes.route('/')
-@login_required
+@runs_routes.route('/', methods=['GET'])
 def get_user_runs():
-    verified_user = verify_user()
-    user_runs = {
-        'runs': verified_user['runs']
-    }
-    return user_runs
+    #verified_user = verify_user()
+    # user_runs = {
+    #     'runs': verified_user['runs']
+    # }
+    user_list = User.objects()
+    return jsonify(user_list[0]["runs"]) #user_runs
 
 @runs_routes.route('/<int:id>')
-@login_required
 def get_user_run_by_id(id):
     verified_user = verify_user()
     temp_list = verified_user['runs']
@@ -31,7 +31,6 @@ def get_user_run_by_id(id):
     return "error"
 
 @runs_routes.route('/', methods=['POST'])
-@login_required
 def create_run():
     verified_user = verify_user()
     req_body = request.json
