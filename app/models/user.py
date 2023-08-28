@@ -1,14 +1,22 @@
 from .db import db
+from mongoengine import *
+from .runs import Runs
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 
 
-class User(db.Document, UserMixin):
+class User(Document, UserMixin):
     __tablename__ = 'users'
 
-    username = db.StringField()
-    email = db.StringField()
-    hashed_password = db.StringField()
+    _id = StringField()
+    username = StringField()
+    email = EmailField(unique=True)
+    hashed_password = StringField()
+    runs = ListField(EmbeddedDocumentField(Runs))
+
+    @property
+    def get_id(self):
+        return lambda: self.email
 
     @property
     def password(self):
@@ -23,7 +31,7 @@ class User(db.Document, UserMixin):
 
     def to_dict(self):
         return {
-            'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'runs': self.runs
         }
