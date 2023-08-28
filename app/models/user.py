@@ -8,10 +8,15 @@ from flask_login import UserMixin
 class User(Document, UserMixin):
     __tablename__ = 'users'
 
+    _id = StringField()
     username = StringField()
     email = EmailField(unique=True)
     hashed_password = StringField()
     runs = ListField(EmbeddedDocumentField(Runs))
+
+    @property
+    def get_id(self):
+        return lambda: self.email
 
     @property
     def password(self):
@@ -26,7 +31,7 @@ class User(Document, UserMixin):
 
     def to_dict(self):
         return {
-            'id': self.id,
             'username': self.username,
-            'email': self.email
+            'email': self.email,
+            'runs': self.runs
         }

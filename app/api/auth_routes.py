@@ -3,6 +3,7 @@ from app.models import User, db
 from app.forms import LoginForm
 from app.forms import SignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
+import json
 
 auth_routes = Blueprint('auth', __name__)
 
@@ -23,7 +24,7 @@ def authenticate():
     """
     Authenticates a user.
     """
-    if current_user.is_authenticated:
+    if current_user:
         return current_user.to_dict()
     return {'errors': ['Unauthorized']}
 
@@ -37,11 +38,17 @@ def login():
     # Get the csrf_token from the request cookie and put it into the
     # form manually to validate_on_submit can be used
     form['csrf_token'].data = request.cookies['csrf_token']
+    req_body = request.json
     if form.validate_on_submit():
         # Add the user to the session, we are logged in!
-        user = User.query.filter(User.email == form.data['email']).first()
-        login_user(user)
-        return user.to_dict()
+        #user = User.query.filter(User.email == form.data['email']).first()
+        print("Getting User...")
+        user = json.loads(User.objects(email=req_body['email']).to_json())[0]
+        checked_user = User(_id=user['_id']['$oid'], username=user['username'], email=user['email'], hashed_password=['hashed_password'])
+        print(user)
+        print(checked_user._id)
+        login_user(checked_user)
+        return user
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 
@@ -65,10 +72,10 @@ def sign_up():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password']
+            password=form.data['password'],
+            runs=list()
         )
-        db.session.add(user)
-        db.session.commit()
+        user.save()
         login_user(user)
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

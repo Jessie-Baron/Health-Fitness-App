@@ -8,6 +8,7 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.runs_routes import runs_routes
+import json
 
 
 app = Flask(__name__, static_folder='../react-app/build', static_url_path='/')
@@ -25,8 +26,13 @@ login.login_view = 'auth.unauthorized'
 
 
 @login.user_loader
-def load_user(id):
-    return User.query.get(int(id))
+def load_user(email):
+    print("IN LOAD USER")
+    print(email)
+    print(json.loads(User.objects(email=email).to_json())[0])
+    temp = json.loads(User.objects(email=email).to_json())[0]
+    temp_user = User(_id=temp['_id']['$oid'], username=temp['username'], email=temp['email'], runs=temp['runs'])
+    return temp_user
 
 
 # Tell flask about our seed commands
