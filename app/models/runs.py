@@ -2,6 +2,6 @@ from mongoengine import *
 
 class Runs(EmbeddedDocument):
     run_id = SequenceField()
-    date = DateTimeField()
+    date = StringField()
     duration = StringField()
     distance = FloatField()
