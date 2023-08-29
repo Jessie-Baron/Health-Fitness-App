@@ -34,7 +34,7 @@ def get_user_run_by_id(id):
 def create_run():
     
     req_body = request.json
-    new_run = Runs(date=str(datetime.datetime.now()).replace(" ", "T").replace(microsecond=0), duration=req_body["duration"], distance=req_body["distance"])
+    new_run = Runs(date=str(datetime.datetime.now().replace(microsecond=0)).replace(" ", "T"), duration=req_body["duration"], distance=req_body["distance"])
     add_run = User.objects(email=current_user.email)
     add_run.update(add_to_set__runs=[new_run])
     return "success"

@@ -72,7 +72,7 @@ def sign_up():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password'],
+            hashed_password=form.data['password'],
             runs=list()
         )
         user.save()
