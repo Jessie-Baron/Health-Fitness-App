@@ -27,11 +27,8 @@ login.login_view = 'auth.unauthorized'
 
 @login.user_loader
 def load_user(email):
-    print("IN LOAD USER")
-    print(email)
-    print(json.loads(User.objects(email=email).to_json())[0])
     temp = json.loads(User.objects(email=email).to_json())[0]
-    temp_user = User(_id=temp['_id']['$oid'], username=temp['username'], email=temp['email'], runs=temp['runs'])
+    temp_user = User(_id=temp['_id']['$oid'], username=temp['username'], email=temp['email'], role=temp['role'], runs=temp['runs'])
     return temp_user
 
 

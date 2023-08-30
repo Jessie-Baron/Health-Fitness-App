@@ -1,9 +1,11 @@
 from flask import Blueprint, jsonify, session, request
-from app.models import User, db
+from app.models import User
 from app.forms import LoginForm
 from app.forms import SignUpForm
+from app.forms import AdminSignUpForm
 from flask_login import current_user, login_user, logout_user, login_required
 from werkzeug.security import generate_password_hash
+from app.models import roles_required
 import json
 
 auth_routes = Blueprint('auth', __name__)
@@ -45,7 +47,7 @@ def login():
         #user = User.query.filter(User.email == form.data['email']).first()
         print("Getting User...")
         user = json.loads(User.objects(email=req_body['email']).to_json())[0]
-        checked_user = User(_id=user['_id']['$oid'], username=user['username'], email=user['email'], hashed_password=['hashed_password'])
+        checked_user = User(_id=user['_id']['$oid'], username=user['username'], email=user['email'], role=user['role'], hashed_password=['hashed_password'])
         print(user)
         print(checked_user._id)
         login_user(checked_user)
@@ -73,6 +75,7 @@ def sign_up():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
+            role='user',
             hashed_password=generate_password_hash(form.data['password']),
             runs=list()
         )
@@ -81,6 +84,26 @@ def sign_up():
         return user.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
+@auth_routes.route('/admin/signup', methods=['POST'])
+@login_required
+@roles_required('admin')
+def admin_sign_up_user():
+    """
+    ADMIN: Creates a new user with custom role
+    """
+    form = AdminSignUpForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        user = User(
+            username=form.data['username'],
+            email=form.data['email'],
+            role=form.data['role'],
+            hashed_password=generate_password_hash(form.data['password']),
+            runs=list()
+        )
+        user.save()
+        return user.to_dict()
+    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
 
 @auth_routes.route('/unauthorized')
 def unauthorized():
