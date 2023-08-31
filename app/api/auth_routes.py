@@ -25,6 +25,7 @@ def authenticate():
     Authenticates a user.
     """
     if current_user:
+        print('this is the current user >>>>>>', current_user)
         return current_user.to_dict()
     return {'errors': ['Unauthorized']}
 
@@ -72,7 +73,7 @@ def sign_up():
         user = User(
             username=form.data['username'],
             email=form.data['email'],
-            password=form.data['password'],
+            hashed_password=form.data['password'],
             runs=list()
         )
         user.save()

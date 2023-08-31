@@ -33,5 +33,6 @@ class User(Document, UserMixin):
         return {
             'username': self.username,
             'email': self.email,
-            'runs': self.runs
+            'runs': self.runs,
+            'password': self.hashed_password
         }

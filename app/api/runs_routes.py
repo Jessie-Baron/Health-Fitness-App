@@ -8,20 +8,19 @@ import json
 runs_routes = Blueprint('runs', __name__)
 
 @runs_routes.route('/', methods=['GET'])
-@login_required
 def get_user_runs():
     #verified_user = verify_user()
     # user_runs = {
     #     'runs': verified_user['runs']
     # }
+    print("this is the current user >>>>>>>>", current_user)
     user_list = User.objects(email=current_user.email)
     return jsonify(user_list[0]["runs"]) #user_runs
 
 @runs_routes.route('/<int:id>')
-@login_required
 def get_user_run_by_id(id):
     #verified_user = verify_user()
-    
+
     temp = json.loads(User.objects(email=current_user.email).to_json())
     temp_list = temp[0]['runs']
     for run in temp_list:
@@ -30,9 +29,8 @@ def get_user_run_by_id(id):
     return "error"
 
 @runs_routes.route('/', methods=['POST'])
-@login_required
 def create_run():
-    
+
     req_body = request.json
     new_run = Runs(date=str(datetime.datetime.now()).replace(" ", "T").replace(microsecond=0), duration=req_body["duration"], distance=req_body["distance"])
     add_run = User.objects(email=current_user.email)
@@ -40,7 +38,6 @@ def create_run():
     return "success"
 
 @runs_routes.route('/<int:id>', methods=['PUT'])
-@login_required
 def update_run(id):
     temp = json.loads(User.objects(email=current_user.email).to_json())
     req_body = request.json
@@ -53,11 +50,9 @@ def update_run(id):
             run['distance'] = req_body['distance']
             run['duration'] = req_body['duration']
             run['date'] = req_body['date']
-            
+
             update_user = User.objects(email=current_user.email)
             update_user.update(set__runs=temp_list)
             return "success"
-        
-    return "error"
 
-    
+    return "error"

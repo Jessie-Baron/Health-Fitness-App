@@ -7,7 +7,6 @@ user_routes = Blueprint('users', __name__)
 # localhost:5000/
 # localhost:3000/login (form) -> auth route (localhost:5000/)
 @user_routes.route('/')
-@login_required
 def users():
     """
     Query for all users and returns them in a list of user dictionaries
