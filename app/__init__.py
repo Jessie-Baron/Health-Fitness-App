@@ -81,6 +81,42 @@ def react_root(path):
     return app.send_static_file('index.html')
 
 
+def insert_test_data():
+    test_users = [
+        {
+            "username": "test3",
+            "email": "test3@email.com",
+            "hashed_password": "pbkdf2:sha256:260000$PnCHdPUPWbXcTY2p$b035fc26255f307f6d9f86055f05b38b9bc833f88e113c3cac255413cffa990f",
+            "runs": [
+                {
+                    "run_id": 2,
+                    "date": "2023-08-28T13:58:47.217",
+                    "duration": "01:20:00",
+                    "distance": 13
+                }
+            ]
+        },
+        {
+            "username": "test4",
+            "email": "test4@email.com",
+            "hashed_password": "pbkdf2:sha256:260000$PnCHdPUPWbXcTY2p$b035fc26255f307f6d9f86055f05b38b9bc833f88e113c3cac255413cffa990f",
+            "runs": [
+                {
+                    "run_id": 21,
+                    "date": "2023-08-29T13:41:42",
+                    "duration": "75",
+                    "distance": 4.58
+                }
+            ]
+        }
+    ]
+
+    user_collection = db.users
+    user_collection.insert_many(test_users)
+
+    for user in test_users:
+        user.save()
+
 @app.errorhandler(404)
 def not_found(e):
     return app.send_static_file('index.html')
