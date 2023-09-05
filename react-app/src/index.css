@@ -3,7 +3,7 @@ body {
     padding: 0;
     background-image: url("C:\\Users\\blwis\\Health-Fitness-App\\react-app\\src\\components\\running image.jpeg");
     background-repeat: no-repeat;
-    background-size: auto;
+    background-size: contain;
     background-position: center center;
     height: 100vh;
     display: flex;

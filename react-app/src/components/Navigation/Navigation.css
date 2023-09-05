@@ -11,9 +11,9 @@
   background-color: #635c5c;
   padding: 10px 0;
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 60px; /* Adjust the height as needed */
+  justify-content: center;
+  align-items: center;
+  height: 60px;
 }
 
 .nav-list {
