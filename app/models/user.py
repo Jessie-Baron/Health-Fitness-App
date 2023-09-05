@@ -12,6 +12,7 @@ class User(Document, UserMixin):
     username = StringField()
     email = EmailField(unique=True)
     hashed_password = StringField()
+    role = StringField()
     runs = ListField(EmbeddedDocumentField(Runs))
 
     @property
@@ -33,5 +34,6 @@ class User(Document, UserMixin):
         return {
             'username': self.username,
             'email': self.email,
-            'runs': self.runs
+            'runs': self.runs,
+            'password': self.hashed_password
         }
