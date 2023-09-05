@@ -8,6 +8,7 @@ from .models import db, User
 from .api.user_routes import user_routes
 from .api.auth_routes import auth_routes
 from .api.runs_routes import runs_routes
+from .api.admin_routes import admin_routes
 import json
 
 
@@ -36,6 +37,7 @@ def load_user(email):
 app.register_blueprint(user_routes, url_prefix='/api/users')
 app.register_blueprint(auth_routes, url_prefix='/api/auth')
 app.register_blueprint(runs_routes, url_prefix='/api/runs')
+app.register_blueprint(admin_routes, url_prefix='/api/admin')
 db.init_app(app)
 
 # Application Security
