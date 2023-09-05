@@ -11,21 +11,15 @@ body {
 }
 
 header {
-    background-color: #333; /* Change this to your desired background color */
-    padding: 10px 0;
+    background-color: #333;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
-    z-index: 1000; /* Ensure it's above other content */
-}
-
-nav {
-    /* Your navigation styles go here */
+    z-index: 1000;
 }
 
 main {
     flex-grow: 1;
     padding: 20px;
-    /* Your main content styles go here */
 }

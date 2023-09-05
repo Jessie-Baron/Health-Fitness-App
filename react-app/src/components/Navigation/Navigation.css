@@ -37,4 +37,18 @@
 
 .nav-link:hover {
   text-decoration: underline;
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.nav-item2 {
+  display: block;
+  min-width: auto;
+  min-height: auto;
+  padding: 14px 28px;
+  font-size: 20px;
+  color: black;
+  cursor: pointer;
+  text-align: center;
+  width: 50px;
 }
