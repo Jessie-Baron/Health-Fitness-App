@@ -21,7 +21,7 @@
 #modal-content {
   font-family: 'Roboto', sans-serif;
   position: absolute;
-  background-color: rgb(116, 227, 246);
+  background-color: skyblue;
   padding: 25px;
   display: flex;
   flex-direction: column;
