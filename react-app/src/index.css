@@ -1,1 +1,31 @@
-/* TODO Add site wide styles */
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("C:\\Users\\blwis\\Health-Fitness-App\\react-app\\src\\components\\running image.jpeg");
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: center center;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: #333; /* Change this to your desired background color */
+    padding: 10px 0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000; /* Ensure it's above other content */
+}
+
+nav {
+    /* Your navigation styles go here */
+}
+
+main {
+    flex-grow: 1;
+    padding: 20px;
+    /* Your main content styles go here */
+}

@@ -19,6 +19,26 @@
 }
 
 #modal-content {
+  font-family: 'Roboto', sans-serif;
   position: absolute;
-  background-color:white;
+  background-color: rgb(116, 227, 246);
+  padding: 25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: solid;
+  border-color: black;
+}
+
+#modal-content label {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+#modal-content input {
+  width: 100%;
+  padding: 5px;
 }

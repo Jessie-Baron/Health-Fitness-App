@@ -47,6 +47,7 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
+				<br></br>
 				<label>
 					Username
 					<input
@@ -56,6 +57,7 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
+				<br></br>
 				<label>
 					Password
 					<input
@@ -65,6 +67,7 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
+				<br></br>
 				<label>
 					Confirm Password
 					<input
@@ -74,6 +77,7 @@ function SignupFormModal() {
 						required
 					/>
 				</label>
+				<br></br>
 				<button type="submit">Sign Up</button>
 			</form>
 		</>
