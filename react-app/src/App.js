@@ -7,6 +7,7 @@ import { authenticate } from "./store/session";
 import Navigation from "./components/Navigation";
 import RunDropdown from "./components/runsDropdown";
 import RunsGrid from "./components/runGrid";
+import Splash from "./components/splash";
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <SignupFormPage />
           </Route>
           <Route path='/'>
+            {!user && <Splash />}
             {user && <RunDropdown />}
             {user && <RunsGrid />}
           </Route>
